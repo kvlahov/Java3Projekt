@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/WEB-INF/shared/mainTemplate.xhtml">
+            <ui:define name="styles">
+                <h:outputStylesheet name="css/cart.css"/>
+                <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css"></link>
+            </ui:define>
+            <ui:define name="title">
+                Admin pane
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div class="row">
+                        <div class="nav flex-md-column nav-pills col-md-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#users-info" role="tab" aria-controls="v-pills-home" aria-selected="true">Users login info</a>
+                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#history" role="tab" aria-controls="v-pills-messages" aria-selected="false">Purchase history</a>
+                        </div>
+                        <div class="tab-content col-md-9" id="v-pills-tabContent">
+                            <div class="tab-pane fade show active" id="users-info" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                <ui:include src="/WEB-INF/admin/userInfo.xhtml"/>
+                            </div>
+                            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                <ui:include src="/WEB-INF/shared/history.xhtml"/>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+
+            </ui:define>
+
+            <ui:define name="scripts">
+                <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+                <h:outputScript name="js/historyDataTable.js"/>
+                <script>
+                    $('#loginHistoryTable').DataTable({
+                        "order": [[2, "desc"]]
+                    });
+                    
+                    adjustDataTableWidth();
+                    setupHistoryDataTable('#purchase-history-table');
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

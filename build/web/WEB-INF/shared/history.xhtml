@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition>
+        <h3 class="mb-2">Purchase history</h3>
+        <table id="purchase-history-table" class="display w-100">
+            <thead>
+                <tr>
+                    <th>Receipt id</th>
+                    <th>Total</th>
+                    <th>Purchase date</th>
+                    <th>Payment method</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <ui:repeat value="#{purchaseHistory.receipts}" var="receipt">
+                    <tr>
+                        <td>#{receipt.receiptId}</td>
+                        <td>#{receipt.total}</td>
+                        <td>
+                            <h:inputHidden value="#{receipt.datetime}"/>
+                            #{app.getFormattedDateTime(receipt.datetime)}
+                        </td>
+                        <td>#{receipt.paymentMethod}</td>
+                        <td class="text-right">
+                            <button class="btn faa-parent animated-hover">
+                                <i class="fas fa-eye faa-horizontal faa-slow" title="View"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </ui:repeat>
+            </tbody>
+        </table>
+    </ui:composition>
+</html>
+

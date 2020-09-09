@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/WEB-INF/shared/mainTemplate.xhtml">
+            <ui:define name="styles">
+                <h:outputStylesheet name="css/cart.css"/>
+            </ui:define>
+            <ui:define name="title">
+                Cart
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <h3>Cart overview</h3>
+                    <div class="table-responsive">
+                        <table class="table w-100 cart-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Item</th>
+                                    <th>Description</th>
+                                    <th>Price per unit</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <ui:repeat value="#{cart.items}" var="item">
+                                    <tr>
+                                        <td>
+                                            <h:graphicImage name="#{item.imgPath}" class="cart-image"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{item.title}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{item.description}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{item.price}kn"/>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" value="#{item.quantity}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{item.total}kn"/>
+                                        </td>
+                                        <td>
+                                            <h:commandButton class="btn btn-danger"
+                                                             value="Remove"
+                                                             action="#{cart.removeFromCart(item.id)}">
+                                                <f:ajax render="@form" onevent="removedItem"/>
+                                            </h:commandButton>
+                                        </td>
+                                    </tr>
+                                </ui:repeat>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" class="text-right">
+                                        <h:outputText value="Grand total:"
+                                                      rendered="#{not cart.isCartEmpty}"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="#{cart.cartTotal}kn"
+                                                      class="text-success font-weight-bold"
+                                                      rendered="#{not cart.isCartEmpty}"/>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </h:form>
+
+            </ui:define>
+
+            <ui:define name="scripts">
+                <script>
+                    function removedItem(data) {
+                        if (data.status === 'success') {
+                            showSuccess('Item removed');
+                        }
+                    }
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

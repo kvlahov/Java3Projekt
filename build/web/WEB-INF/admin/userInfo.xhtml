@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition>
+        <h3>Users' login history</h3>
+        <table id="loginHistoryTable" class="display w-100">
+            <thead>
+                <tr>
+                    <th>User Id</th>
+                    <th>User name</th>
+                    <th>Last Login Date</th>
+                    <th>IP address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ui:repeat value="#{userInfo.loginInfoes}" var="info">
+                    <tr>
+                        <td>#{info.user.userId}</td>
+                        <td>#{info.user.username}</td>
+                        <td>
+                            <h:inputHidden value="#{info.datetime}"/>
+                            #{app.getFormattedDateTime(info.datetime)}
+                        </td>
+                        <td>#{info.ipAddress}</td>
+                    </tr>
+                </ui:repeat>
+            </tbody>
+        </table>
+    </ui:composition>
+</html>
+

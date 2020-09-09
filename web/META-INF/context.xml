@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/JavaProjekt">
+    <Realm className="org.apache.catalina.realm.JDBCRealm"
+           driverName="org.postgresql.Driver"
+           connectionURL="jdbc:postgresql://ec2-54-247-89-181.eu-west-1.compute.amazonaws.com:5432/d6m4g3ci2e6aa2?sslmode=require&amp;user=ehtlcvtxxqsyqr&amp;password=a9cdbea8f3406c99e2deb2055f81b9e4cf24f72d801b550a523d734799ad8ef8"
+           userTable="users" userNameCol="username" userCredCol="passwordhash"
+           userRoleTable="roles" roleNameCol="rolename"/>
+</Context>

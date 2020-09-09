@@ -1,0 +1,51 @@
+:root {
+    --main-purple: #40356f;
+    --main-purple-light: #F3E8FF;
+    --main-light-gray: #e6e6e6;
+}
+
+html, body {
+  height: 100%;
+}
+
+#top {
+    position: relative;
+    margin: 0px 0px 10px 0px;
+}
+
+#bottom {
+    position: relative;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    padding: 5px;
+}
+
+.right-align {
+    position:absolute;
+    top:0.25rem;
+    right:0.5rem;
+}
+
+.login-form {
+    padding:20px;
+    background: var(--main-light-gray);
+    -webkit-box-shadow: 0px 0px 30px -10px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 0px 30px -10px rgba(0,0,0,1);
+    box-shadow: 0px 0px 30px -10px rgba(0,0,0,1);
+}
+
+.login-form-inner {
+    background: var(--white);
+    padding: 10px;
+}
