@@ -5,24 +5,30 @@
  */
 package com.kvlahov.models;
 
+import java.io.Serializable;
+
 /**
  *
  * @author evlakre
  */
-public class Item {
-    private int id;
+public class ItemViewModel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
     private String title;
     private String description;
-    private double price;
+    private Float price;
     private String imgPath;
     private int quantity = 1;
-    private double total;
-    
-    public int getId() {
+    private Currencies currency;
+    private Categories category;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -42,11 +48,11 @@ public class Item {
         this.description = description;
     }
 
-    public double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -65,19 +71,27 @@ public class Item {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
-    public double getTotal(){
+
+    public Float getTotal() {
         return price * quantity;
     }
-    
-      public void addToQuantity(int quantity) {
+
+    public Categories getCategory() {
+        return category;
+    }
+
+    public void setCategory(Categories category) {
+        this.category = category;
+    }
+
+    public void addToQuantity(int quantity) {
         this.quantity += quantity;
     }
-        
-    public Item() {
+
+    public ItemViewModel() {
     }
-    
-    public Item(int id, String title, String description, double price, String imgPath) {
+
+    public ItemViewModel(Long id, String title, String description, Float price, String imgPath) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -85,6 +99,21 @@ public class Item {
         this.imgPath = imgPath;
     }
 
-  
-    
+    public ItemViewModel(Items model) {
+        this.id = model.getItemId();
+        this.title = model.getTitle();
+        this.description = model.getDescription();
+        this.price = model.getPricePerUnit();
+        this.imgPath = model.getImgPath();
+        this.currency = model.getCurrency();
+        this.category = model.getCategory();
+    }
+
+    public Currencies getCurrency() {
+        return this.currency;
+    }
+
+    public void setCurrency(Currencies currency) {
+        this.currency = currency;
+    }
 }

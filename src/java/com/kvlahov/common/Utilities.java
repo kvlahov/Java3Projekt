@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kvlahov.utilities;
+package com.kvlahov.common;
 
 import com.kvlahov.models.Users;
 import java.nio.charset.StandardCharsets;

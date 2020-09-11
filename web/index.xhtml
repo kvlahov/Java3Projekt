@@ -9,6 +9,17 @@
         <ui:composition template="/WEB-INF/shared/mainTemplate.xhtml">
             <ui:define name="styles">
                 <h:outputStylesheet name="./css/index.css"/>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"></link>
+                <style>
+                    .filters-container {
+                        padding: 20px 50px;
+                    }
+                    
+                    .shadow {
+                        /* Add shadows to create the "card" effect */
+                        box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.2);
+                    }
+                </style>
             </ui:define>
             <ui:define name="title">
                 WebShop home
@@ -30,7 +41,7 @@
                                             <h5 class="card-title">#{items.previewItem.title}</h5>
                                             <p class="card-text flex-grow-1">#{items.previewItem.description}</p>
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <span class="card-text text-danger">#{items.previewItem.price}kn</span>
+                                                <span class="card-text text-danger">$#{items.previewItem.price}</span>
 
                                                 <div class="d-flex align-items-center">
                                                     <i class="fas fa-times mr-2"></i>
@@ -57,17 +68,43 @@
                         </h:panelGroup>
                     </h:panelGroup>
                 </h:form>
+                
+                <div class="mr-4">
+                    Top selling products
+                </div>
+                
+                <h:form class="filters-container border-top border-bottom shadow">
+                    <div class="d-flex">
+                        <h:inputText class="form-control flex-grow-1" 
+                                     p:placeholder="Search by item title" 
+                                     value="#{items.titleSearchTerm}"/>
+                        <h:commandButton class="btn btn-primary"
+                                         value="Search items"
+                                         action="#{items.filterItems()}">
+                            <f:ajax render=":items-form" execute="@form"/>
+                        </h:commandButton>
+                    </div>
 
-                <h:form>
-                    <div class="row">
-                        <ui:repeat value="#{items.items}" var="item">
+                    <div class="pt-3">
+                        Filter by category:
+                        <h:selectManyListbox styleClass="selectpicker" value="#{items.selectedCategoriesIds}">
+                            <f:selectItems value="#{items.categories}" var="cat"
+                                           itemLabel="#{cat.title}" 
+                                           itemValue="#{cat.categoryId}" />
+                        </h:selectManyListbox>
+                    </div>
+                </h:form>
+
+                <h:form id="items-form">
+                    <div class="row mt-4">
+                        <ui:repeat value="#{items.filteredItems}" var="item">
                             <div class="col-sm-6 col-md-4 form-group">
                                 <div class="card h-100">
                                     <h:graphicImage name="#{item.imgPath}" class="card-img-top card-image"/>
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title">#{item.title}</h5>
                                         <p class="card-text flex-grow-1">#{item.description}</p>
-                                        <p class="card-text text-danger">#{item.price}kn</p>
+                                        <p class="card-text text-danger">$#{item.price}</p>
                                     </div>
                                     <h:commandButton value="Add to cart" 
                                                      action="#{items.setPreviewItem(item)}" 
@@ -82,6 +119,7 @@
             </ui:define>
 
             <ui:define name="scripts">
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
                 <script>
                     function showModal(data) {
                         if (data.status === 'success') {

@@ -8,7 +8,9 @@ package com.kvlahov.models;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,7 +51,7 @@ public class Receipt implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date datetime;
     @Column(name = "total")
-    private BigInteger total;
+    private Float total;
     @JoinColumn(name = "payment_method_id", referencedColumnName = "payment_method_id")
     @ManyToOne
     private PaymentMethods paymentMethod;
@@ -58,17 +61,18 @@ public class Receipt implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne
     private Users user;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receipt")
+    private List<ReceiptItem> receiptItemList;
 
     public Receipt() {
     }
 
-    public Receipt(Long receiptId) {
-        this.receiptId = receiptId;
-    }
-
-    public Receipt(Long receiptId, Date datetime) {
-        this.receiptId = receiptId;
+    public Receipt(Date datetime, Float total, PaymentMethods paymentMethod, ShippingInfoes shippingInfo, Users user) {
         this.datetime = datetime;
+        this.total = total;
+        this.paymentMethod = paymentMethod;
+        this.shippingInfo = shippingInfo;
+        this.user = user;
     }
 
     public Long getReceiptId() {
@@ -87,11 +91,11 @@ public class Receipt implements Serializable {
         this.datetime = datetime;
     }
 
-    public BigInteger getTotal() {
+    public Float getTotal() {
         return total;
     }
 
-    public void setTotal(BigInteger total) {
+    public void setTotal(Float total) {
         this.total = total;
     }
 
@@ -119,6 +123,14 @@ public class Receipt implements Serializable {
         this.user = user;
     }
 
+    public List<ReceiptItem> getReceiptItemList() {
+        return receiptItemList;
+    }
+
+    public void setReceiptItemList(List<ReceiptItem> receiptItemList) {
+        this.receiptItemList = receiptItemList;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -5,14 +5,19 @@
  */
 package com.kvlahov.beans;
 
-import com.kvlahov.models.Item;
+import com.kvlahov.dal.IUnitOfWork;
+import com.kvlahov.dal.implementations.AppUnitOfWork;
+import com.kvlahov.models.Categories;
+import com.kvlahov.models.ItemViewModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import org.hibernate.FetchMode;
 
 /**
  *
@@ -20,34 +25,109 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean(name = "items", eager = true)
 @ViewScoped
-public class ItemsBean implements Serializable{
+public class ItemsBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private List<ItemViewModel> items;
+    private List<ItemViewModel> filteredItems;
+    private ItemViewModel previewItem;
+    private IUnitOfWork unitOfWork;
+    private List<Categories> categories;
+    private int currentPage = 1;
+    private int maxPages;
+    private int showPerPage = 15;
     
-    private List<Item> items;
-    private Item previewItem;
+    private List<String> selectedCategoriesIds;
+    private String titleSearchTerm;
 
     @PostConstruct
     public void init() {
-        items = new ArrayList<>();
-        items.add(new Item(1,"Samsung galaxy A21s", "Smartphone, 6,5\", Octa-Core 2Ghz, 3GB", 1599, "images/samsung_ga21.jpg"));
-        items.add(new Item(2,"Huawei P40 Lite", "Smartphone 6.39\",Octa-Core 2.2Ghz, 4GB", 1349, "images/huawei_p40.jpg"));
-        items.add(new Item(3,"Huawei Y5P Green", "Smartphone, 5,45\"", 749, "images/huawei_y5p.jpg"));
+        unitOfWork = new AppUnitOfWork();
+
+        items = unitOfWork.getItemsRepository().getAll()
+                .stream()
+                .map(ItemViewModel::new)
+                .collect(Collectors.toList());
+        
+        filteredItems = items;
+        categories = unitOfWork.getCategoriesRepository().getAll();
     }
 
-    public List<Item> getItems() {
+    public List<ItemViewModel> getItems() {
         return items;
     }
 
-    public Item getPreviewItem() {
+    public ItemViewModel getPreviewItem() {
         return previewItem;
     }
 
-    public void setPreviewItem(Item previewItem) {
+    public void setPreviewItem(ItemViewModel previewItem) {
         this.previewItem = previewItem;
     }
-    
-    public void addToCart(String string){
-        String s = string;
+
+    public List<Categories> getCategories() {
+        return categories;
     }
+
+    public void setCategories(List<Categories> categories) {
+        this.categories = categories;
+    }
+
+    public List<String> getSelectedCategoriesIds() {
+        return selectedCategoriesIds;
+    }
+
+    public void setSelectedCategoriesIds(List<String> selectedCategories) {
+        this.selectedCategoriesIds = selectedCategories;
+    }
+
+    public String getTitleSearchTerm() {
+        return titleSearchTerm;
+    }
+
+    public void setTitleSearchTerm(String titleSearchTerm) {
+        this.titleSearchTerm = titleSearchTerm;
+    }
+
+    public List<ItemViewModel> getFilteredItems() {
+        return filteredItems;
+    }
+
+    public void setFilteredItems(List<ItemViewModel> filteredItems) {
+        this.filteredItems = filteredItems;
+    }
+    
+    public void filterItems(){
+        filteredItems = items.stream()
+                .filter(i -> {
+                    if(selectedCategoriesIds.isEmpty()){
+                        return true;
+                    } else {
+                        return selectedCategoriesIds.contains(i.getCategory().getCategoryId().toString());
+                    }
+                })
+                .filter(i -> {
+                    if(titleSearchTerm == null || titleSearchTerm.trim().isEmpty()){
+                        return true;
+                    } else {
+                        return i.getTitle().toLowerCase().contains(titleSearchTerm.toLowerCase());
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+    public String getClassForCategory(Categories category) {
+        switch (category.getTitle()) {
+            case "Smartphones":
+                return "fas fa-mobile";
+            case "Laptops":
+                return "fas fa-laptop-code";
+            case "TV":
+                return "fas fa-tv";
+            default:
+                return "";
+        }
+    }
+
 }

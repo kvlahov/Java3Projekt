@@ -30,7 +30,11 @@
                             </thead>
 
                             <tbody>
-
+                                <h:panelGroup rendered="#{cart.isCartEmpty}">
+                                    <tr>
+                                        <td colspan="6" class="text-center bg-light">No items in the cart</td>
+                                    </tr>
+                                </h:panelGroup>
                                 <ui:repeat value="#{cart.items}" var="item">
                                     <tr>
                                         <td>
@@ -43,13 +47,13 @@
                                             <h:outputText value="#{item.description}"/>
                                         </td>
                                         <td>
-                                            <h:outputText value="#{item.price}kn"/>
+                                            <h:outputText value="$#{item.price}"/>
                                         </td>
                                         <td>
                                             <input type="number" class="form-control" value="#{item.quantity}"/>
                                         </td>
                                         <td>
-                                            <h:outputText value="#{item.total}kn"/>
+                                            <h:outputText value="$#{item.total}"/>
                                         </td>
                                         <td>
                                             <h:commandButton class="btn btn-danger"
@@ -77,6 +81,11 @@
                             </tfoot>
                         </table>
                     </div>
+                    
+                    <h:link outcome="/secured/user/checkout"
+                            rendered="#{not cart.isCartEmpty}"
+                            value="Checkout" 
+                            class="btn btn-primary"></h:link>
                 </h:form>
 
             </ui:define>

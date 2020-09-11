@@ -9,7 +9,7 @@ import com.kvlahov.dal.implementations.UsersRepository;
 import com.kvlahov.models.Roles;
 import com.kvlahov.models.Roles_;
 import com.kvlahov.models.Users;
-import com.kvlahov.utilities.Utilities;
+import com.kvlahov.common.Utilities;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;

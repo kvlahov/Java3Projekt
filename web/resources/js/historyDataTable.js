@@ -1,6 +1,7 @@
-function setupHistoryDataTable(el) {
+function setupHistoryDataTable(el, orderIndex) {
     const table = $(el).DataTable({
         dom: 'Bfrtip',
+        "order": [[orderIndex, "desc"]]
     });
 
     table.columns().flatten().each(function (colIdx) {
@@ -46,4 +47,10 @@ function adjustDataTableWidth() {
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
     });
+}
+
+function showReceiptDetails(data) {
+    if (data.status === 'success') {
+        $('#receiptDetailsInfo').modal('show');
+    }
 }

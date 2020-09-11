@@ -50,13 +50,13 @@ public class Items implements Serializable {
     @Column(name = "img_path")
     private String imgPath;
     @Column(name = "price_per_unit")
-    private BigInteger pricePerUnit;
+    private Float pricePerUnit;
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     @ManyToOne
-    private Categories categoryId;
+    private Categories category;
     @JoinColumn(name = "currency_id", referencedColumnName = "currency_id")
     @ManyToOne
-    private Currencies currencyId;
+    private Currencies currency;
 
     public Items() {
     }
@@ -102,28 +102,28 @@ public class Items implements Serializable {
         this.imgPath = imgPath;
     }
 
-    public BigInteger getPricePerUnit() {
+    public Float getPricePerUnit() {
         return pricePerUnit;
     }
 
-    public void setPricePerUnit(BigInteger pricePerUnit) {
+    public void setPricePerUnit(Float pricePerUnit) {
         this.pricePerUnit = pricePerUnit;
     }
 
-    public Categories getCategoryId() {
-        return categoryId;
+    public Categories getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Categories categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Categories category) {
+        this.category = category;
     }
 
-    public Currencies getCurrencyId() {
-        return currencyId;
+    public Currencies getCurrency() {
+        return currency;
     }
 
-    public void setCurrencyId(Currencies currencyId) {
-        this.currencyId = currencyId;
+    public void setCurrency(Currencies currency) {
+        this.currency = currency;
     }
 
     @Override

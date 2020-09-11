@@ -2,9 +2,78 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        
+        <h:form id="shipping-info-modal">
+            <ui:include src="/WEB-INF/user/shippingInfoForm.xhtml"/>
+        </h:form>
+
+        <h:form id="delete-prompt">
+            <h:panelGroup>
+                <h:panelGroup rendered="#{not empty shippingInfo.selectedShippingInfo}">
+                    <div class="modal fade" id="deleteShippingInfoPrompt" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">
+                                        Delete shipping information
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete selected shipping information?
+                                </div>
+                                <div class="modal-footer justify-content-end">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+                                    <h:commandButton value ="Delete"
+                                                     class="btn btn-danger"
+                                                     action="#{shippingInfo.save(shippingInfo.selectedShippingInfo)}">
+                                        <f:ajax render=":shipping-info-main" execute="@form" onevent="hideDeletePrompt"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:form>
+
+        <h:form id="shipping-info-main">
+            <div class="mb-2">
+                <h:commandButton class="btn btn-secondary" value="Add new" action="#{shippingInfo.setCreateMode}">
+                    <f:ajax render=":shipping-info-modal" onevent="showModal"/>
+                </h:commandButton>
+            </div>
+
+            <h:panelGroup id="shipping-info-list">
+                <ui:repeat value="#{shippingInfo.usersShippingInfoes}" var="info">
+                    <div class="d-flex p-3 border-bottom border-top">
+                        <div class="flex-grow-1 d-flex flex-column">
+                            <div>#{info.getUserFriendlyAddress()}</div>
+                            <div class="text-muted text-sm">#{info.additionalinfo}</div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-center">
+                            <h:commandLink class="btn btn-success" title="View" action="#{shippingInfo.setSelectedShippingInfo(info, 'VIEW')}">
+                                <i class="fas fa-eye"></i>
+                                <f:ajax render=":shipping-info-modal" onevent="showModal"/>
+                            </h:commandLink>
+                            <h:commandLink class="btn btn-secondary" title="Edit" action="#{shippingInfo.setSelectedShippingInfo(info, 'EDIT')}">
+                                <i class="fas fa-edit"></i>
+                                <f:ajax render=":shipping-info-modal" onevent="showModal"/>
+                            </h:commandLink>
+                            <h:commandLink class="btn btn-danger" title="Delete" action="#{shippingInfo.setSelectedShippingInfo(info, 'DELETE')}" >
+                                <i class="fas fa-trash"></i>
+                                <f:ajax render=":delete-prompt" onevent="showDeletePrompt"/>
+                            </h:commandLink>
+                        </div>
+                    </div>
+                </ui:repeat>
+            </h:panelGroup>
+        </h:form>
     </ui:composition>
 </html>
 

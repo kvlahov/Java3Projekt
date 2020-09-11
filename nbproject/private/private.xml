@@ -3,12 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/web/secured/admin/adminPanel.xhtml</file>
-            <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/src/java/com/kvlahov/dal/implementations/ItemsRepository.java</file>
-            <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/web/secured/user/manageAccount.xhtml</file>
-            <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/web/WEB-INF/shared/navbar.xhtml</file>
+            <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/src/java/com/kvlahov/beans/user/CheckoutBean.java</file>
+            <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/web/secured/user/checkout.xhtml</file>
+            <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/web/categories.xhtml</file>
+            <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/src/java/com/kvlahov/beans/ItemsBean.java</file>
             <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/web/WEB-INF/shared/history.xhtml</file>
             <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/src/java/com/kvlahov/beans/PurchaseHistoryBean.java</file>
+            <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/web/index.xhtml</file>
+            <file>file:/C:/Users/evlakre/Documents/NetBeansProjects/JavaProjekt/web/resources/js/historyDataTable.js</file>
         </group>
     </open-files>
 </project-private>

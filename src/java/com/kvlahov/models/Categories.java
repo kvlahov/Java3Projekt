@@ -41,7 +41,7 @@ public class Categories implements Serializable {
     private Integer categoryId;
     @Column(name = "title")
     private String title;
-    @OneToMany(mappedBy = "categoryId")
+    @OneToMany(mappedBy = "category")
     private List<Items> itemsList;
 
     public Categories() {

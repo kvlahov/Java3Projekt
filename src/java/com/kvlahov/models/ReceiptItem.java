@@ -49,20 +49,19 @@ public class ReceiptItem implements Serializable {
     @Column(name = "item_description")
     private String itemDescription;
     @Column(name = "price_per_unit")
-    private BigInteger pricePerUnit;
+    private Float pricePerUnit;
     @Column(name = "quantity")
     private Integer quantity;
     @Column(name = "total")
-    private BigInteger total;
+    private Float total;
     @JoinColumn(name = "currency_id", referencedColumnName = "currency_id")
     @ManyToOne
-    private Currencies currencyId;
+    private Currencies currency;
+    @JoinColumn(name = "receipt_id", referencedColumnName = "receipt_id")
+    @ManyToOne
+    private Receipt receipt;
 
     public ReceiptItem() {
-    }
-
-    public ReceiptItem(Long receiptItemId) {
-        this.receiptItemId = receiptItemId;
     }
 
     public ReceiptItem(Long receiptItemId, String itemTitle) {
@@ -70,6 +69,15 @@ public class ReceiptItem implements Serializable {
         this.itemTitle = itemTitle;
     }
 
+    public ReceiptItem(ItemViewModel vm){
+        this.itemTitle = vm.getTitle();
+        this.itemDescription = vm.getDescription();
+        this.pricePerUnit = vm.getPrice();
+        this.quantity = vm.getQuantity();
+        this.total = vm.getTotal();
+        this.currency = vm.getCurrency();
+    }
+    
     public Long getReceiptItemId() {
         return receiptItemId;
     }
@@ -94,11 +102,11 @@ public class ReceiptItem implements Serializable {
         this.itemDescription = itemDescription;
     }
 
-    public BigInteger getPricePerUnit() {
+    public Float getPricePerUnit() {
         return pricePerUnit;
     }
 
-    public void setPricePerUnit(BigInteger pricePerUnit) {
+    public void setPricePerUnit(Float pricePerUnit) {
         this.pricePerUnit = pricePerUnit;
     }
 
@@ -110,22 +118,30 @@ public class ReceiptItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public BigInteger getTotal() {
+    public Float getTotal() {
         return total;
     }
 
-    public void setTotal(BigInteger total) {
+    public void setTotal(Float total) {
         this.total = total;
     }
 
-    public Currencies getCurrencyId() {
-        return currencyId;
+    public Currencies getCurrency() {
+        return currency;
     }
 
-    public void setCurrencyId(Currencies currencyId) {
-        this.currencyId = currencyId;
+    public void setCurrency(Currencies currency) {
+        this.currency = currency;
     }
 
+    public Receipt getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(Receipt receipt) {
+        this.receipt = receipt;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

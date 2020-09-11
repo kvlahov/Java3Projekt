@@ -57,7 +57,7 @@ public class ShippingInfoes implements Serializable {
     private String additionalinfo;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
-    private Users userId;
+    private Users user;
     @OneToMany(mappedBy = "shippingInfo")
     private List<Receipt> receiptList;
 
@@ -115,12 +115,12 @@ public class ShippingInfoes implements Serializable {
         this.additionalinfo = additionalinfo;
     }
 
-    public Users getUserId() {
-        return userId;
+    public Users getUser() {
+        return user;
     }
 
-    public void setUserId(Users userId) {
-        this.userId = userId;
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     @XmlTransient
@@ -131,7 +131,11 @@ public class ShippingInfoes implements Serializable {
     public void setReceiptList(List<Receipt> receiptList) {
         this.receiptList = receiptList;
     }
-
+    
+    public String getUserFriendlyAddress(){
+        return String.format("%s, %s %s", address, postalcode, city);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

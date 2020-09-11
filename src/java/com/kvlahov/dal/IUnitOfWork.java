@@ -22,7 +22,7 @@ public interface IUnitOfWork {
     IRepository<PaymentMethods, Integer> getPaymentMethodsRepository();
     IItemsRepository getItemsRepository();
     IRepository<LoginInfoes, Long> getLoginInfoesRepository();
-    IRepository<ReceiptItem, Long> getReceiptItemRepository();
-    IRepository<ShippingInfoes, Long> getShippingInfoesRepository();   
+    IReceiptItemRepository getReceiptItemRepository();
+    IShippingInfoesRepository getShippingInfoesRepository();   
     IRolesRepository getRolesRepository();   
 }

@@ -9,6 +9,7 @@ import com.kvlahov.dal.IItemsRepository;
 import com.kvlahov.dal.IReceiptRepository;
 import com.kvlahov.dal.IRepository;
 import com.kvlahov.dal.IRolesRepository;
+import com.kvlahov.dal.IShippingInfoesRepository;
 import com.kvlahov.dal.IUnitOfWork;
 import com.kvlahov.dal.IUsersRepository;
 import com.kvlahov.models.Categories;
@@ -18,7 +19,8 @@ import com.kvlahov.models.LoginInfoes;
 import com.kvlahov.models.PaymentMethods;
 import com.kvlahov.models.ReceiptItem;
 import com.kvlahov.models.ShippingInfoes;
-import com.kvlahov.utilities.Utilities;
+import com.kvlahov.common.Utilities;
+import com.kvlahov.dal.IReceiptItemRepository;
 import javax.persistence.EntityManager;
 
 /**
@@ -35,8 +37,8 @@ public class AppUnitOfWork implements IUnitOfWork {
     private final IRepository<PaymentMethods, Integer> paymentMethodsRepository;
     private final IItemsRepository itemsRepository;
     private final IRepository<LoginInfoes, Long> loginInfoesRepository;
-    private final IRepository<ReceiptItem, Long> receiptItemRepository;
-    private final IRepository<ShippingInfoes, Long> shippingInfoesRepository;
+    private final IReceiptItemRepository receiptItemRepository;
+    private final IShippingInfoesRepository shippingInfoesRepository;
     private IRolesRepository rolesRepository;
 
     public AppUnitOfWork() {
@@ -52,8 +54,8 @@ public class AppUnitOfWork implements IUnitOfWork {
         this.paymentMethodsRepository = new GenericRepository<>(entityManager, PaymentMethods.class);
         this.itemsRepository = new ItemsRepository(entityManager);
         this.loginInfoesRepository = new GenericRepository<>(entityManager, LoginInfoes.class);
-        this.receiptItemRepository = new GenericRepository<>(entityManager, ReceiptItem.class);
-        this.shippingInfoesRepository = new GenericRepository<>(entityManager, ShippingInfoes.class);
+        this.receiptItemRepository = new ReceiptItemRepository(entityManager);
+        this.shippingInfoesRepository = new ShippingInfoesRepository(entityManager);
         this.rolesRepository = new RolesRepository(entityManager);
     }
 
@@ -104,12 +106,12 @@ public class AppUnitOfWork implements IUnitOfWork {
     }
 
     @Override
-    public IRepository<ReceiptItem, Long> getReceiptItemRepository() {
+    public IReceiptItemRepository getReceiptItemRepository() {
         return receiptItemRepository;
     }
 
     @Override
-    public IRepository<ShippingInfoes, Long> getShippingInfoesRepository() {
+    public IShippingInfoesRepository getShippingInfoesRepository() {
         return shippingInfoesRepository;
     }    
 

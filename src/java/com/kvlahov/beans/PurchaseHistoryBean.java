@@ -9,7 +9,8 @@ import com.kvlahov.dal.IUnitOfWork;
 import com.kvlahov.dal.implementations.AppUnitOfWork;
 import com.kvlahov.models.Receipt;
 import com.kvlahov.models.Users;
-import com.kvlahov.utilities.Utilities;
+import com.kvlahov.common.Utilities;
+import com.kvlahov.models.ReceiptItem;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,7 @@ public class PurchaseHistoryBean implements Serializable {
 
     private List<Receipt> receipts;
     private IUnitOfWork unitOfWork;
+    private Receipt selectedReceipt;
 
     @PostConstruct
     public void init() {
@@ -48,7 +50,20 @@ public class PurchaseHistoryBean implements Serializable {
         }
     }
 
+    public Receipt getSelectedReceipt() {
+        return selectedReceipt;
+    }
+
+    public void setSelectedReceipt(Receipt selectedReceipt) {
+        if(selectedReceipt.getReceiptItemList().isEmpty()){
+            List<ReceiptItem> items  = unitOfWork.getReceiptItemRepository().getByReceipt(selectedReceipt);
+            selectedReceipt.setReceiptItemList(items);
+        }
+        this.selectedReceipt = selectedReceipt;
+    }
+
     public List<Receipt> getReceipts() {
         return receipts;
     }
+
 }

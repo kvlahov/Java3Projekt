@@ -8,7 +8,7 @@ package com.kvlahov.dal.implementations;
 import com.kvlahov.dal.IRepository;
 import com.kvlahov.dal.IUsersRepository;
 import com.kvlahov.models.Users;
-import com.kvlahov.utilities.Utilities;
+import com.kvlahov.common.Utilities;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;

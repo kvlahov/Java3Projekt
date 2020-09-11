@@ -1,0 +1,221 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jw="http://xmlns.jcp.org/jsf/composite/jw">
+    <h:body>
+        <ui:composition template="/WEB-INF/shared/mainTemplate.xhtml">
+            <ui:define name="styles">
+                <h:outputStylesheet name="css/cart.css"/>
+                <style>
+                    .btn-cash {
+                        height: 45px;
+                        margin-bottom: 14px;
+                    }
+                </style>
+            </ui:define>
+            <ui:define name="title">
+                Checkout
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="shipping-info-modal">
+                    <jw:shippingInfoForm renderIds=":shipping-info-main"/>
+                </h:form>
+
+
+                <div class="modal fade" id="shippingInfoModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                    Select shipping information
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h:form>
+                                    <h:panelGroup id="shipping-info-list">
+                                        <ui:repeat value="#{shippingInfo.usersShippingInfoes}" var="info">
+                                            <div class="d-flex p-3 border-bottom border-top">
+                                                <div class="flex-grow-1 d-flex flex-column">
+                                                    <div>#{info.getUserFriendlyAddress()}</div>
+                                                    <div class="text-muted text-sm">#{info.additionalinfo}</div>
+                                                </div>
+                                                <div class="d-flex justify-content-end align-items-center">
+                                                    <h:panelGroup class="text-success"
+                                                                  rendered="#{checkout.selectedShippingInfo.shippingInfoId == info.shippingInfoId}">
+                                                        <i class="fas fa-check-square mr-2"></i>
+                                                        Selected!
+                                                    </h:panelGroup>
+                                                    <h:commandLink class="btn btn-success" 
+                                                                   value="Select"
+                                                                   rendered="#{checkout.selectedShippingInfo.shippingInfoId != info.shippingInfoId}"
+                                                                   action="#{checkout.setSelectedShippingInfo(info)}">
+                                                        <f:ajax render="@form :shipping-info-main" />
+                                                    </h:commandLink>
+                                                </div>
+                                            </div>
+                                        </ui:repeat>
+                                    </h:panelGroup>
+                                </h:form>
+                            </div>
+
+                            <div class="modal-footer justify-content-end">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="table-responsive">
+                    <table class="table w-100 cart-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Price per unit</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <ui:repeat value="#{cart.items}" var="item">
+                                <tr>
+                                    <td>
+                                        <h:graphicImage name="#{item.imgPath}" class="cart-image"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="#{item.title}"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="#{item.description}"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="$#{item.price}"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="#{item.quantity}"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="$#{item.total}"/>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right">
+                                    <h:outputText value="Grand total:"
+                                                  rendered="#{not cart.isCartEmpty}"/>
+                                </td>
+                                <td>
+                                    <h:outputText value="$#{cart.cartTotal}"
+                                                  class="text-success font-weight-bold"
+                                                  rendered="#{not cart.isCartEmpty}"/>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <h:form id="shipping-info-main">
+                    <h:panelGroup rendered="#{not cart.isCartEmpty}">
+                        <div class="d-flex mb-3 align-items-center">
+                            <span class="mr-2 font-weight-bold">Shipping information:</span>
+                            <h:panelGroup rendered="#{not empty checkout.selectedShippingInfo}">
+                                <jw:shippingInfo  address="#{checkout.selectedShippingInfo.userFriendlyAddress}" 
+                                                  additionalInfo="#{checkout.selectedShippingInfo.additionalinfo}"/>
+                                <button class="btn btn-dark ml-2" id="btnChangeShippingInfo">
+                                    Change
+                                </button>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{empty checkout.selectedShippingInfo}">
+                                <span class="mr-2">No address found</span>
+                                <h:commandButton class="btn btn-dark" value="Add new" action="#{shippingInfo.setCreateMode}">
+                                    <f:ajax render=":shipping-info-modal" onevent="showModal"/>
+                                </h:commandButton>
+                            </h:panelGroup>
+                        </div>
+                    </h:panelGroup>
+                </h:form>
+                <h:form id="purchaseForm">
+                    <h:panelGroup rendered="#{not empty checkout.selectedShippingInfo}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h:commandLink class="btn btn-secondary btn-block btn-cash"
+                                               action="#{checkout.purchaseWithCard()}">
+                                    <i class="fas fa-money-bill-wave pr-2"></i>
+                                    Cash
+                                </h:commandLink>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="paypal-btns-container">
+                                </div>
+                            </div>
+                            <h:commandButton id="btnPaypalPayment" 
+                                             class="d-none" 
+                                             action="#{checkout.purchaseWithPaypal()}">
+                            </h:commandButton>
+                        </div>
+                    </h:panelGroup>
+                </h:form>
+
+            </ui:define>
+
+            <ui:define name="scripts">
+                <script
+                    src="https://www.paypal.com/sdk/js?client-id=Ae-Z7bYxk3DQcqiszZjVsTS3BHiEJ5Ya7hdbXaxxqWMQyt0Y2uPKz2Gbzn1gTX5q-pIU9rhfdAnqeFb1">
+                </script>
+                <script>
+                    paypal.Buttons({
+                        createOrder: function (data, actions) {
+                            // This function sets up the details of the transaction, including the amount and line item details.
+                            return actions.order.create({
+                                purchase_units: [{
+                                        amount: {
+                                            value: '#{cart.cartTotal}'
+                                        }
+                                    }]
+                            });
+                        },
+                        onApprove: function (data, actions) {
+                            // This function captures the funds from the transaction.
+                            return actions.order.capture().then(function (details) {
+                                console.log(details);
+                                $('#purchaseForm\\:btnPaypalPayment').click();
+
+                            });
+                        }
+                    }).render('#paypal-btns-container');
+
+                    function hideModal(data) {
+                        if (data.status === 'success') {
+                            $('#shippingInfoModal').modal('hide');
+                        }
+                    }
+
+                    function showModal(data) {
+                        if (data.status === 'success') {
+                            $('#shippingInfoModal').modal('show');
+                        }
+                    }
+
+                    $('#btnChangeShippingInfo').on('click', function (e) {
+                        e.preventDefault();
+                        $('#shippingInfoModal').modal('show');
+                    })
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

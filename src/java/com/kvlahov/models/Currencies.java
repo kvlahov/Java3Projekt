@@ -41,9 +41,9 @@ public class Currencies implements Serializable {
     private Integer currencyId;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "currencyId")
+    @OneToMany(mappedBy = "currency")
     private List<ReceiptItem> receiptItemList;
-    @OneToMany(mappedBy = "currencyId")
+    @OneToMany(mappedBy = "currency")
     private List<Items> itemsList;
 
     public Currencies() {

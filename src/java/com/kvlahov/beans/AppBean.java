@@ -11,7 +11,7 @@ import com.kvlahov.dal.IUsersRepository;
 import com.kvlahov.dal.implementations.AppUnitOfWork;
 import com.kvlahov.models.Roles;
 import com.kvlahov.models.Users;
-import com.kvlahov.utilities.Utilities;
+import com.kvlahov.common.Utilities;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;

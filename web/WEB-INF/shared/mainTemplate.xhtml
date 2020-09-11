@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"></link>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://raw.githubusercontent.com/l-lin/font-awesome-animation/master/dist/font-awesome-animation.min.css" />
-        
+
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 
@@ -21,12 +21,17 @@
     </h:head>
 
     <h:body>
+        <ui:insert name="metadata"/>
 
         <div id="top">
             <ui:insert name="top">
-                <ui:include src="navbar.xhtml"/>
+                <div class="text-center p-2">
+                    <h1>Java Web shop</h1>
+                    <h3>Find everything you've been looking for, and more.</h3>
+                </div>
             </ui:insert>
         </div>
+        <ui:include src="navbar.xhtml"/>
 
         <div id="content" class="center_content">
             <div class="container-fluid">
@@ -46,24 +51,25 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
         <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-        
+
         <script>
             function showSuccess(message) {
-                alertify.success(message); 
+                alertify.success(message);
             }
-            
+
             function showError(message) {
-                alertify.error(message); 
+                alertify.error(message);
             }
-            
+
             function showWarning(message) {
-                alertify.warning(message); 
+                alertify.warning(message);
             }
-            
+
             function showDefault(message) {
-                alertify.message(message); 
+                alertify.message(message);
             }
-             $('[data-toggle="tooltip"]').tooltip();
+
+            $('[data-toggle="tooltip"]').tooltip();
         </script>
         <ui:insert name="scripts"></ui:insert>
     </h:body>

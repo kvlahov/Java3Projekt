@@ -5,13 +5,25 @@
  */
 package com.kvlahov.beans;
 
-import com.kvlahov.models.Item;
+import com.kvlahov.beans.user.ShippingInfoBean;
+import com.kvlahov.common.Utilities;
+import com.kvlahov.dal.IUnitOfWork;
+import com.kvlahov.dal.implementations.AppUnitOfWork;
+import com.kvlahov.models.ItemViewModel;
+import com.kvlahov.models.Items;
+import com.kvlahov.models.PaymentMethods;
+import com.kvlahov.models.Receipt;
+import com.kvlahov.models.ReceiptItem;
+import com.kvlahov.models.ShippingInfoes;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -21,17 +33,18 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name = "cart", eager = true)
 @SessionScoped
 public class CartBean implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
-    private List<Item> items;
-    private boolean isCartEmpty;
 
+    private static final long serialVersionUID = 1L;
+
+    private List<ItemViewModel> items;
+    private boolean isCartEmpty;
+    
     @PostConstruct
     public void init() {
         items = new ArrayList<>();
     }
 
-    public List<Item> getItems() {
+    public List<ItemViewModel> getItems() {
         return items;
     }
 
@@ -39,25 +52,29 @@ public class CartBean implements Serializable {
         return items.isEmpty();
     }
 
-    public void addToCart(Item item) {
-        Optional<Item> foundItem = items.stream()
+    public void addToCart(ItemViewModel item) {
+        Optional<ItemViewModel> foundItem = items.stream()
                 .filter(i -> i.getId() == item.getId())
                 .findFirst();
         if (foundItem.isPresent()) {
             foundItem.get().addToQuantity(item.getQuantity());
         } else {
             items.add(item);
-        }        
+        }
     }
 
     public void removeFromCart(int itemId) {
         items.removeIf(i -> i.getId() == itemId);
     }
-    
-    public double getCartTotal(){
-        return items.stream()
+
+    public Float getCartTotal() {
+        return (float) items.stream()
                 .mapToDouble(i -> i.getTotal())
                 .sum();
+    }    
+    
+    public void clearCart() {
+        items.clear();
     }
 
 }

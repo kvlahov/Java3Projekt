@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+        <ui:composition template="/WEB-INF/shared/mainTemplate.xhtml">
+            <ui:define name="metadata">
+
+            </ui:define>
+            <ui:define name="styles">
+                <h:outputStylesheet name="css/cart.css"/>
+                <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css"></link>
+                <style>
+                    .text-xl {
+                        font-size: 1.7rem;
+                    }
+                </style>
+            </ui:define>
+            <ui:define name="title">
+                Order successful
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <div>
+                        <p class="text-xl">Your order is received and is being processed. It will arrive in a heartbeat.</p>
+                        <p class="text-xl">In the meantime <h:link outcome="/index.xhtml">keep shopping</h:link></p>
+                    </div>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="scripts">
+                <script>
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

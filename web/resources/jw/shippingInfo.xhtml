@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="address" required="true"/>
+        <cc:attribute name="additionalInfo" required="true"/>
+        <cc:attribute name="showActions" required="false" default="false"/>
+        <cc:attribute name="viewAction" required="false" />
+        <cc:attribute name="editAction" required="false" />
+        <cc:attribute name="deleteAction" required="false" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div class="d-flex p-3 border-bottom border-top">
+            <div class="flex-grow-1 d-flex flex-column">
+                <div>#{cc.attrs.address}</div>
+                <div class="text-muted text-sm">#{cc.attrs.additionalInfo}</div>
+            </div>
+            <h:panelGroup rendered="#{cc.attrs.showActions}">
+                <div class="d-flex justify-content-end align-items-center">
+                    <h:commandLink class="btn btn-success" title="View" action="#{cc.attrs.viewAction}">
+                        <i class="fas fa-eye"></i>
+                        <f:ajax render=":shipping-info-modal" onevent="showModal"/>
+                    </h:commandLink>
+                    <h:commandLink class="btn btn-secondary" title="Edit" action="#{cc.attrs.editAction}">
+                        <i class="fas fa-edit"></i>
+                        <f:ajax render=":shipping-info-modal" onevent="showModal"/>
+                    </h:commandLink>
+                    <h:commandLink class="btn btn-danger" title="Delete" action="#{cc.attrs.deleteAction}" >
+                        <i class="fas fa-trash"></i>
+                        <f:ajax render=":delete-prompt" onevent="showDeletePrompt"/>
+                    </h:commandLink>
+                </div>
+            </h:panelGroup>
+        </div>
+    </cc:implementation>
+</html>

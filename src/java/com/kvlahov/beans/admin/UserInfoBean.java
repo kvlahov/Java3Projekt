@@ -8,7 +8,7 @@ package com.kvlahov.beans.admin;
 import com.kvlahov.dal.IUnitOfWork;
 import com.kvlahov.dal.implementations.AppUnitOfWork;
 import com.kvlahov.models.LoginInfoes;
-import com.kvlahov.utilities.Utilities;
+import com.kvlahov.common.Utilities;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;

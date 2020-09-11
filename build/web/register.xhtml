@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="/WEB-INF/shared/loginTemplate.xhtml">
             <ui:define name="title">
@@ -18,27 +19,44 @@
                                     <h3>Register an account</h3>
                                 </div>
                                 <div class="form-group">
-                                    <h:inputText value="#{login.username}" 
+                                    <h:inputText value="#{register.username}" 
                                                  class="form-control"
                                                  required="true"
+                                                 id="username"
+                                                 requiredMessage="This field is required"
                                                  pt:placeholder="Username" />
+                                    <h:outputText class="text-danger"
+                                                  value="#{register.usernameValidationMsg}"
+                                                  rendered="#{not empty register.usernameValidationMsg}"/>
+                                    <h:message for="username" class="text-danger"/>
                                 </div>
 
                                 <div class="form-group">
-                                    <h:inputSecret value="#{login.password}" 
+                                    <h:inputSecret value="#{register.pass}" 
                                                    class="form-control"
                                                    required="true"
+                                                   id="password"
+                                                   requiredMessage="This field is required"
                                                    pt:placeholder="Password"/>
+                                    <h:outputText class="text-danger"
+                                                  value="#{register.passwordValidationMsg}"
+                                                  rendered="#{not empty register.passwordValidationMsg}"/>
+                                    <h:message for="password" class="text-danger" />
                                 </div>
                                 <div class="form-group">
-                                    <h:inputSecret value="#{login.password}" 
+                                    <h:inputSecret value="#{register.repeatPass}" 
                                                    class="form-control"
+                                                   id="repeatPass"
+                                                   requiredMessage="This field is required"
                                                    required="true"
                                                    pt:placeholder="Confirm Password"/>
+                                    <h:message for="repeatPass" class="text-danger"/>
                                 </div>
                                 <h:commandButton value="Register"
                                                  class="btn btn-primary btn-block"
-                                                 action="#{login.login}"/>
+                                                 action="#{register.registerUser()}">
+<!--                                    <f:ajax render="@this" execute="@form" />-->
+                                </h:commandButton>
                             </div>
                         </div>
                     </h:form>

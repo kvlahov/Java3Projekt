@@ -12,7 +12,7 @@ import com.kvlahov.dal.implementations.GenericRepository;
 import com.kvlahov.dal.implementations.UsersRepository;
 import com.kvlahov.models.LoginInfoes;
 import com.kvlahov.models.Users;
-import com.kvlahov.utilities.Utilities;
+import com.kvlahov.common.Utilities;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
@@ -33,7 +33,7 @@ import javax.servlet.http.HttpSession;
  * @author evlakre
  */
 @ManagedBean(name = "login")
-@RequestScoped
+@ViewScoped
 public class LoginBean implements Serializable {
     
     private static final long serialVersionUID = 1L;

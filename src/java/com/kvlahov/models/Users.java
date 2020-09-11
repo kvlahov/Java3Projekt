@@ -60,7 +60,7 @@ public class Users implements Serializable {
     @Column(name = "lastlogin")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastlogin;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<ShippingInfoes> shippingInfoesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<LoginInfoes> loginInfoesList;
